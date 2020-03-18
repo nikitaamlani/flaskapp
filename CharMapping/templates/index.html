@@ -1,0 +1,56 @@
+
+<html>
+	<head>
+		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+		<!-- STYLE CSS -->
+		<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+      
+	</head>
+
+	<body>
+
+		<div class="wrapper">
+			<div class="inner">
+				<form method="post" id="form">
+			<h1  class='change'> Character Mapper</h1></br>
+			<label class='change'>Does one-to-one character mapping exists from string1 to string2 ?</label></br> </br>
+			<label for="s1">Enter String1 : </label></br></br>
+			<input type="text" id="s1" name="s1" autofocus autocomplete="off"></br></br>
+      <label for="s2">Enter String2 : </label></br></br>
+			<input type="text" id="s2" name="s2" autofocus autocomplete="off"></br></br>
+
+			<p> <button>Check</button></p>
+		</form>
+    
+		<p id="Answer"></p>
+		<script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+		<script>
+			$('#form').on('submit', function(e){
+        $('#Answer').html('')
+				var s1 = $('#s1').val();
+        var s2 = $('#s2').val();
+				e.preventDefault();
+        if(s1 != null && s1 != '' && s2 != null && s2 != ''){
+				$.ajax({
+					url: 'http://127.0.0.1:5000/charMap/',
+					data: {'s1': s1,'s2' : s2},
+					method: 'POST',
+					success: function(data) {
+						$('#Answer').html(data['answer'])
+					}
+				});
+      }
+      else{
+        alert('Please enter values for string1 and string2')
+      }
+			});
+      
+
+		</script>
+		</div>
+</div>
+		
+</body><!-- This templates was made by Colorlib (https://colorlib.com) -->
+</html>
